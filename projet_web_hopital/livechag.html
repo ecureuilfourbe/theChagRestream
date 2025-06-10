@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Stream HLS avec HLS.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        #videoPlayer {
+            width: 100%;
+            max-width: 800px; /* Ajustez selon vos besoins */
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Regardez le direct (avec HLS.js) :</h1>
+
+    <video id="videoPlayer" controls autoplay></video>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('videoPlayer');
+            var videoSrc = 'http://10.50.90.53/hls/test.m3u8'; // VOTRE URL DE FLUX HLS
+
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(videoSrc);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    // Vous pouvez décommenter la ligne suivante si vous voulez que la vidéo démarre
+                    // automatiquement seulement après que le manifeste HLS est chargé et analysé.
+                    // video.play();
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // Pour Safari et autres navigateurs avec support HLS natif
+                video.src = videoSrc;
+                video.addEventListener('loadedmetadata', function() {
+                    // video.play(); // Décommenter pour autoplay
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

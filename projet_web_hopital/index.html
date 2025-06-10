@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux vidéo en direct - Hôpital d'Avranches-Granville (GH-MSM)</title>
+    <!-- Bibliothèque HLS.js (conservée du fichier original) -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Feuille de style principale -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- En-tête -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <img src="images/logo.png" alt="Logo Groupe Hospitalier Mont Saint-Michel">
+                <div class="site-title">Groupe Hospitalier Mont Saint-Michel</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section héro -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1 class="hero-title">Direct : Certification GH-MSM 2025</h1>
+            <p class="hero-subtitle">Restez connecté avec le Groupe Hospitalier Mont Saint-Michel grâce à notre service de streaming en direct.</p>
+        </div>
+    </section>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="container">
+            <section class="section">
+                
+                <!-- Section vidéo (intégration du lecteur HLS) -->
+                <div class="video-section fade-in">
+                    <div class="video-container">
+                        <h3 class="video-title">Diffusion en direct</h3>
+                        <!-- Lecteur vidéo (conservé du fichier original) -->
+                        <video id="videoPlayer" controls autoplay muted></video>
+                        <div class="video-info mt-3">
+                            <p><strong>Note :</strong> Ce flux est diffusé en direct depuis l'hôpital d'Avranches-Granville. La qualité peut varier en fonction de votre connexion internet. <p style = "color:#FF0000;">Pensez à activer le son</p> </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Groupe Hospitalier Mont Saint-Michel</h3>
+                    <p>849, rue des Menneries<br>BP 629<br>50406 Granville Cedex</p>
+                    <p>Téléphone : +33 2 33 91 50 00</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Groupe Hospitalier Mont Saint-Michel. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script HLS.js (conservé du fichier original) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('videoPlayer');
+            var videoSrc = 'http://10.50.90.53/hls/test.m3u8'; // VOTRE URL DE FLUX HLS
+
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(videoSrc);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    // Vous pouvez décommenter la ligne suivante si vous voulez que la vidéo démarre
+                    // automatiquement seulement après que le manifeste HLS est chargé et analysé.
+                    // video.play();
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // Pour Safari et autres navigateurs avec support HLS natif
+                video.src = videoSrc;
+                video.addEventListener('loadedmetadata', function() {
+                    // video.play(); // Décommenter pour autoplay
+                });
+            }
+        });
+    </script>
+
+    <!-- Script principal -->
+    <script src="js/script.js"></script>
+</body>
+</html>
+
